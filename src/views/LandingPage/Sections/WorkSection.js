@@ -8,10 +8,19 @@ import { makeStyles } from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import CustomButton from "components/CustomButtons/Button.js";
+import Check from "@material-ui/icons/Check";
 
 import styles from "assets/jss/material-kit-react/views/landingPageSections/workStyle.js";
-import { FormControl, MenuItem, InputLabel, Select } from "@material-ui/core";
+import {
+  FormControl,
+  MenuItem,
+  InputLabel,
+  Select,
+  CircularProgress,
+} from "@material-ui/core";
+import Muted from "components/Typography/Muted";
 
 const useStyles = makeStyles(styles);
 
@@ -29,10 +38,31 @@ export default function WorkSection() {
     religion: "",
   };
   const [form, setForm] = React.useState(initialForm);
+  const [alert, setAlert] = React.useState({
+    success: false,
+    error: false,
+  });
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const submit = (event) => {
-    console.log(form);
     event.preventDefault();
+    setIsLoading(true);
+
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbxndsJeKWVbOoeuLtUuD_W50kfLZyM_rOPt9oKcPbneYUhIesY_KkcwZ8S8qkJK8Q1p/exec";
+    const formElement = document.forms["daftar-pelatihan-kinemaster"];
+
+    fetch(scriptURL, { method: "POST", body: new FormData(formElement) })
+      .then((res) => {
+        console.log("Success! ", res);
+        setAlert({ ...alert, success: true });
+        setForm(initialForm);
+      })
+      .catch((e) => {
+        console.log("Error! ", e);
+        setAlert({ ...alert, error: true });
+      })
+      .finally(() => setIsLoading(false));
   };
 
   return (
@@ -46,7 +76,31 @@ export default function WorkSection() {
             quibusdam, soluta, ad nesciunt eum aliquam facere? Exercitationem,
             nisi.
           </h4>
-          <form onSubmit={submit}>
+          {alert.success && (
+            <SnackbarContent
+              message={
+                <span>
+                  <b>Berhasil:</b> mendaftar pelatihan
+                </span>
+              }
+              close
+              color="success"
+              icon={Check}
+            />
+          )}
+          {alert.error && (
+            <SnackbarContent
+              message={
+                <span>
+                  <b>Gagal: </b> periksa koneksi anda
+                </span>
+              }
+              close
+              color="danger"
+              icon="info_outline"
+            />
+          )}
+          <form onSubmit={submit} name="daftar-pelatihan-kinemaster">
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
@@ -61,6 +115,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, nickName: event.target.value }),
                     required: true,
+                    name: "nama_sapaan",
                   }}
                 />
               </GridItem>
@@ -77,6 +132,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, fullName: event.target.value }),
                     required: true,
+                    name: "nama_lengkap",
                   }}
                 />
               </GridItem>
@@ -92,6 +148,7 @@ export default function WorkSection() {
                     onChange={(event) =>
                       setForm({ ...form, greeting: event.target.value })
                     }
+                    name="sapaan"
                   >
                     <MenuItem value="Pak">Pak</MenuItem>
                     <MenuItem value="Bu">Bu</MenuItem>
@@ -116,6 +173,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, whatsApp: event.target.value }),
                     required: true,
+                    name: "whatsapp",
                   }}
                 />
               </GridItem>
@@ -132,6 +190,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, telegram: event.target.value }),
                     required: false,
+                    name: "telegram",
                   }}
                 />
               </GridItem>
@@ -148,6 +207,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, email: event.target.value }),
                     required: true,
+                    name: "email",
                   }}
                 />
               </GridItem>
@@ -164,6 +224,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, city: event.target.value }),
                     required: true,
+                    name: "kota",
                   }}
                 />
               </GridItem>
@@ -179,6 +240,7 @@ export default function WorkSection() {
                     onChange={(event) =>
                       setForm({ ...form, business: event.target.value })
                     }
+                    name="bisnis"
                   >
                     <MenuItem value="Belum punya Bisnis">
                       Belum punya Bisnis
@@ -210,6 +272,7 @@ export default function WorkSection() {
                     onChange={(event) =>
                       setForm({ ...form, religion: event.target.value })
                     }
+                    name="agama"
                   >
                     <MenuItem value="Islam">Islam</MenuItem>
                     <MenuItem value="Kristen">Kristen</MenuItem>
@@ -219,15 +282,21 @@ export default function WorkSection() {
                   </Select>
                 </FormControl>
               </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
+              <GridItem className={classes.require} xs={12} sm={12} md={12}>
+                <Muted>Tanda * wajib diisi</Muted>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={12} className={classes.button}>
                 <CustomButton
-                  className={classes.button}
-                  type="submit"
                   color="primary"
-                  fullWidth="true"
+                  fullWidth={true}
+                  disabled={isLoading}
+                  type="submit"
                 >
                   Daftar
                 </CustomButton>
+                {isLoading && (
+                  <CircularProgress size={23} className={classes.loading} />
+                )}
               </GridItem>
             </GridContainer>
           </form>

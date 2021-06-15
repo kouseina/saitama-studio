@@ -1,4 +1,4 @@
-import { title } from "assets/jss/material-kit-react.js";
+import { title, primaryColor } from "assets/jss/material-kit-react.js";
 
 const workStyle = {
   section: {
@@ -28,6 +28,18 @@ const workStyle = {
     marginTop: 11,
   },
   button: {
+    marginTop: 20,
+    position: "relative",
+  },
+  loading: {
+    color: primaryColor,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12,
+    marginLeft: -12,
+  },
+  require: {
     marginTop: 50,
   },
 };
