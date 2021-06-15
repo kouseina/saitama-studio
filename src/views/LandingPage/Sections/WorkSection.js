@@ -104,7 +104,7 @@ export default function WorkSection() {
             <GridContainer>
               <GridItem xs={12} sm={12} md={6}>
                 <CustomInput
-                  labelText="Nama Sapaan *"
+                  labelText="Nama Panggilan *"
                   id="nickName"
                   formControlProps={{
                     fullWidth: true,
@@ -115,7 +115,7 @@ export default function WorkSection() {
                     onChange: (event) =>
                       setForm({ ...form, nickName: event.target.value }),
                     required: true,
-                    name: "nama_sapaan",
+                    name: "nama_panggilan",
                   }}
                 />
               </GridItem>
