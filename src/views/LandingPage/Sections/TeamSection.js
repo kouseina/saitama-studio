@@ -16,8 +16,8 @@ import CardFooter from "components/Card/CardFooter.js";
 
 import styles from "assets/jss/material-kit-react/views/landingPageSections/teamStyle.js";
 
-import team1 from "assets/img/faces/avatar.jpg";
-// import team2 from "assets/img/faces/christian.jpg";
+// import team1 from "assets/img/faces/avatar.jpg";
+import team2 from "assets/img/faces/christian.jpg";
 // import team3 from "assets/img/faces/kendall.jpg";
 
 const useStyles = makeStyles(styles);
@@ -38,7 +38,7 @@ export default function TeamSection() {
           <GridItem xs={12} sm={12} md={4}>
             <Card plain>
               <GridItem xs={12} sm={12} md={6} className={classes.itemGrid}>
-                <img src={team1} alt="..." className={imageClasses} />
+                <img src={team2} alt="..." className={imageClasses} />
               </GridItem>
               <h4 className={classes.cardTitle}>
                 Yulianto
