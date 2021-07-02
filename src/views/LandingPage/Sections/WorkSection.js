@@ -36,6 +36,7 @@ export default function WorkSection() {
     city: "",
     business: "",
     religion: "",
+    transfer: "",
   };
   const [form, setForm] = React.useState(initialForm);
   const [alert, setAlert] = React.useState({
@@ -279,6 +280,25 @@ export default function WorkSection() {
                     <MenuItem value="Katolik">Katolik</MenuItem>
                     <MenuItem value="Hindu">Hindu</MenuItem>
                     <MenuItem value="Budha">Budha</MenuItem>
+                  </Select>
+                </FormControl>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={6}>
+                <FormControl className={classes.formControl} fullWidth={true}>
+                  <InputLabel id="demo-simple-select-helper-label-transfer">
+                    Transfer *
+                  </InputLabel>
+                  <Select
+                    labelId="demo-simple-select-helper-label-transfer"
+                    id="demo-simple-select-helper-transfer"
+                    value={form.transfer}
+                    onChange={(event) =>
+                      setForm({ ...form, transfer: event.target.value })
+                    }
+                    name="transfer"
+                  >
+                    <MenuItem value="sudah">Sudah</MenuItem>
+                    <MenuItem value="belum">Belum</MenuItem>
                   </Select>
                 </FormControl>
               </GridItem>
