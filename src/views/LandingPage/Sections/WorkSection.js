@@ -169,7 +169,7 @@ export default function WorkSection() {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    type: "number",
+                    type: "tel",
                     value: form.whatsApp,
                     onChange: (event) =>
                       setForm({ ...form, whatsApp: event.target.value }),
@@ -186,7 +186,7 @@ export default function WorkSection() {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    type: "number",
+                    type: "tel",
                     value: form.telegram,
                     onChange: (event) =>
                       setForm({ ...form, telegram: event.target.value }),
